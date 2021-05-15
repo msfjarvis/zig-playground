@@ -1,4 +1,5 @@
 const std = @import("std");
+const testing = @import("std").testing;
 
 const Vec3 = struct {
     x: f32,
@@ -17,4 +18,13 @@ pub fn main() void {
 test "implicitly sized array length" {
     const arr = [_]u8{ 10, 20, 30, 40 };
     std.testing.expect(arr.len == 4);
+}
+
+test "while with continue expression" {
+    var sum: u32 = 0;
+    var i: u8 = 64;
+    while (i > 0) : (i -= 1) {
+        sum += i;
+    }
+    testing.expectEqual(sum, 2080);
 }
