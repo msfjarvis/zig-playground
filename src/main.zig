@@ -14,7 +14,6 @@ pub fn main() void {
     std.debug.print("This is an array: {}\n", .{implicitly_sized_array});
 }
 
-
 test "implicitly sized array length" {
     const arr = [_]u8{10, 20, 30, 40};
     std.testing.expect(arr.len == 4);
