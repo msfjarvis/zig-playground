@@ -8,6 +8,8 @@ const Vec3 = struct {
     z: f32,
 };
 
+const NumericError = error{};
+
 pub fn main() void {
     const inferred_constant: Vec3 = undefined;
     std.debug.print("Hello, {d}!\n", .{inferred_constant});
@@ -45,4 +47,19 @@ test "multi defer" {
         defer x /= 5;
     }
     testing.expect(x == 5);
+}
+
+fn mayError(shouldError: bool) anyerror!u32 {
+    return if (shouldError) error.NumericError else 10;
+}
+
+test "error handling" {
+    const r1 = mayError(true) catch 0;
+    testing.expect(r1 == 0);
+    const r2 = mayError(false) catch 0;
+    testing.expect(r2 == 10);
+    const r3 = mayError(true) catch |err| {
+        testing.expect(err == error.NumericError);
+        return;
+    };
 }
