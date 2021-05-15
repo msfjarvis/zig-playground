@@ -1,5 +1,6 @@
 const std = @import("std");
 const testing = @import("std").testing;
+const print = std.debug.print;
 
 const Vec3 = struct {
     x: f32,
@@ -27,4 +28,11 @@ test "while with continue expression" {
         sum += i;
     }
     testing.expectEqual(sum, 2080);
+}
+
+test "for" {
+    const base: u32 = 97;
+    for ([_]u8{ 'a', 'b', 'c', 'd', 'e', 'f', 'g' }) |char, idx| {
+        testing.expect(char == (base + idx));
+    }
 }
