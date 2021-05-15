@@ -15,6 +15,6 @@ pub fn main() void {
 }
 
 test "implicitly sized array length" {
-    const arr = [_]u8{10, 20, 30, 40};
+    const arr = [_]u8{ 10, 20, 30, 40 };
     std.testing.expect(arr.len == 4);
 }
