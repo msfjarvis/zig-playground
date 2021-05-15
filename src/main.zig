@@ -36,3 +36,13 @@ test "for" {
         testing.expect(char == (base + idx));
     }
 }
+
+test "multi defer" {
+    var x: u8 = 10;
+    {
+        // Executed in reverse order, so the division happens before addition
+        defer x += 3;
+        defer x /= 5;
+    }
+    testing.expect(x == 5);
+}
