@@ -128,3 +128,23 @@ test "swap rectangle sides" {
     testing.expectEqual(rect.length, @as(i32, 50));
     testing.expectEqual(rect.width, @as(i32, 100));
 }
+
+// union(enum) converts this to a tagged union
+// backed by an enum which means we can switch
+// over the tags to find the value which is
+// currently set.
+const Monad = union(enum) {
+    ok: i32,
+    err: [1]u8,
+};
+
+test "union" {
+    var onion = Monad{ .err = [1]u8{'a'} };
+    // The names in the || closure are the temporary
+    // variables created to be used in the RHS expression
+    switch (onion) {
+        .ok => |*ok| ok.* += 1,
+        .err => |*err| err.* = [1]u8{'b'},
+    }
+    testing.expectEqual(onion.err[0], 'b');
+}
