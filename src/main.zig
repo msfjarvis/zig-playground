@@ -90,3 +90,21 @@ test "slice count" {
     const slice = array[0..5];
     testing.expectEqual(@as(u8, 5), slice_len(slice));
 }
+
+const Game = enum {
+    var count: u8 = 0;
+    rocketleague,
+    minecraft,
+    valorant,
+
+    pub fn isGood(self: Game) bool {
+        return self != Game.valorant;
+    }
+};
+
+test "is game gud" {
+    testing.expect(!Game.valorant.isGood());
+    testing.expect(Game.minecraft.isGood());
+    Game.count += 1;
+    testing.expectEqual(@as(u8, 1), Game.count);
+}
