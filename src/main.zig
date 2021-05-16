@@ -78,3 +78,15 @@ test "0 pointer" {
     // error: pointer type '*u8' does not allow address zero
     // const y: *u8 = @intToPtr(*u8, x);
 }
+
+fn slice_len(slice: []const u8) u8 {
+    var sum: u8 = 0;
+    for (slice) |_| sum += 1;
+    return sum;
+}
+
+test "slice count" {
+    const array = [_]u8{ 1, 2, 3, 4, 5, 6 };
+    const slice = array[0..5];
+    testing.expectEqual(@as(u8, 5), slice_len(slice));
+}
