@@ -108,3 +108,23 @@ test "is game gud" {
     Game.count += 1;
     testing.expectEqual(@as(u8, 1), Game.count);
 }
+
+const Rectangle = struct {
+    length: i32,
+    width: i32,
+
+    pub fn swap(self: *Rectangle) void {
+        const tmp = self.length;
+        self.length = self.width;
+        self.width = tmp;
+    }
+};
+
+test "swap rectangle sides" {
+    var rect = Rectangle{ .length = 100, .width = 50 };
+    testing.expectEqual(rect.length, @as(i32, 100));
+    testing.expectEqual(rect.width, @as(i32, 50));
+    rect.swap();
+    testing.expectEqual(rect.length, @as(i32, 50));
+    testing.expectEqual(rect.width, @as(i32, 100));
+}
