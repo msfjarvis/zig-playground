@@ -20,7 +20,7 @@ pub fn main() void {
 
 test "implicitly sized array length" {
     const arr = [_]u8{ 10, 20, 30, 40 };
-    std.testing.expect(arr.len == 4);
+    testing.expectEqual(arr.len, 4);
 }
 
 test "while with continue expression" {
@@ -55,11 +55,11 @@ fn mayError(shouldError: bool) anyerror!u32 {
 
 test "error handling" {
     const r1 = mayError(true) catch 0;
-    testing.expect(r1 == 0);
+    testing.expectEqual(r1, 0);
     const r2 = mayError(false) catch 0;
-    testing.expect(r2 == 10);
+    testing.expectEqual(r2, 10);
     const r3 = mayError(true) catch |err| {
-        testing.expect(err == error.NumericError);
+        testing.expectEqual(err, error.NumericError);
         return;
     };
 }
