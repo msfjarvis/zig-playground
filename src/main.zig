@@ -148,3 +148,28 @@ test "union" {
     }
     testing.expectEqual(onion.err[0], 'b');
 }
+
+var numbers_left: u32 = 5;
+fn eventuallyNull() ?u32 {
+    if (numbers_left == 0) return null;
+    numbers_left -= 1;
+    return numbers_left;
+}
+
+test "optionals" {
+    var sum: u32 = 0;
+    while (eventuallyNull()) |value| {
+        sum += value;
+    }
+    testing.expectEqual(sum, @as(u32, 10));
+
+    const a: ?u32 = 10;
+    const b = a.?;
+    testing.expect(@TypeOf(b) == u32);
+
+    const c: ?u32 = null;
+    const d: u32 = c orelse 10;
+    testing.expect(@TypeOf(c) == ?u32);
+    testing.expect(@TypeOf(d) == u32);
+    testing.expectEqual(d, @as(u32, 10));
+}
