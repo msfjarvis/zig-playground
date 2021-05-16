@@ -63,3 +63,18 @@ test "error handling" {
         return;
     };
 }
+
+test "const pointers" {
+    const x: u8 = 32;
+    var y = &x;
+    // This will fail to compile with
+    // error: cannot assign to constant
+    // y.* += 1;
+}
+
+test "0 pointer" {
+    const x: u8 = 0;
+    // This will fail to compile with
+    // error: pointer type '*u8' does not allow address zero
+    // const y: *u8 = @intToPtr(*u8, x);
+}
